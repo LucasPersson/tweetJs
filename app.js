@@ -3,9 +3,12 @@ const express = require('express');
 const logger = require('morgan');
 const path = require('path');
 const axios = require('axios');
+
 const connect = require('./database/mongodb');
-const Tweet = require('./models/tweet');
-const Comment = require('./models/comment');
+
+const Athlete = require('./models/athlete');
+const Sport = require('./models/sport');
+
 const commentRouter = require('./routers/comment.router');
 
 // on construit notre application qui nous servira à créer nos routes
@@ -20,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.set('view engine', 'hbs');
-// on indique que nos vues se trouverons toujours dans le dossier views 
+// on indique que nos vues se trouverons toujours dans le dossier views
 app.set('views', path.join(__dirname, 'views'));
 
 // on indique à notre app d'utiliser nos routers
@@ -36,12 +39,13 @@ app.get('/tweets/new', (req, res) => {
     res.render('new');
 });
 
-app.get('/tweets', async (req, res) => {
+app.get('/athletes', async (req, res) => {
 
     // on va devoir récupérer depuis la base de données nos tweets ...
-    const tweets = await Tweet.find({}).sort({ createdAt: -1 });
+    const athletes = await Athlete.find({});
+    console.log(athletes)
 
-    res.render('tweets', { tweets });
+    res.render('athletes', { athletes });
 })
 
 app.get('/tweets/:id', async function (req, res) {
@@ -91,7 +95,7 @@ async function getRandomUsers(number) {
         response = await axios.get(url);
     } catch (err) {
         // on catch si il y a une erreur HTTP !
-        // pas de réponse du serveur ! 
+        // pas de réponse du serveur !
         if (!err.response) {
             console.error('Unknown error during the request');
             return [];
