@@ -7,6 +7,10 @@
                 <h5 class="card-title">{{firstName}} {{lastName}}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{gender}}</h6>
                 <p class="card-text">{{country}}</p>
+
+                <form method="DELETE" action="/api/athletes/{{_id}}">
+                    <button type="submit" class="btn btn-primary">Supprimer</button>
+                </form>
             </div>
         </div>
     </div>

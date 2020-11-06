@@ -44,6 +44,13 @@ router.post('/api/athletes', async (req, res) => {
     res.redirect('/athletes');
 })
 
+router.delete('/api/athletes/:athleteId', async (req, res) => {
+    const athleteId = req.params.athleteId;
+    await Athlete.findByIdAndDelete(athleteId);
+
+    res.redirect('/athletes');
+})
+
 // get sports from athlete
 router.get('/api/athletes/:athleteId/sports', async (req, res) => {
     const athleteId = req.params.athleteId;
