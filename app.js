@@ -37,7 +37,6 @@ app.get('/', (req, res) => {
     res.render('index', { name: 'athleteJS' });
 });
 
-
 app.get('/api/sports', async (req, res) => {
     // on va devoir récupérer depuis la base de données nos sports
     const sports = await Sport.find({});
@@ -52,6 +51,30 @@ app.post('/api/sports', async (req, res) => {
         name: paramSport.name,
         athletes: []
     });
+    await sport.save();
+
+    res.redirect('/sports');
+})
+
+app.get('/api/sports/:sportId/athletes', async (req, res) => {
+    const sportId = req.params.sportId;
+    var l = []; // liste des athletes
+
+    // on va devoir récupérer depuis la base de données nos sports
+    const sport = await Sport.findById(sportId);
+    for (var i in sport.athletes) { //
+        l.push( await Athlete.findById(sport.athletes[i]) );
+    }
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(l));
+})
+app.post('/api/sports/:sportId/athletes/:athleteId', async (req, res) => {
+    const sportId = req.params.sportId;
+    const athleteId = req.params.athleteId;
+
+    const sport = await Sport.findById(sportId);
+    if (sport.athletes.indexOf(athleteId) < 0) sport.athletes.push(athleteId)
     await sport.save();
 
     res.redirect('/sports');
@@ -76,6 +99,25 @@ app.post('/api/athletes', async (req, res) => {
     await athlete.save();
 
     res.redirect('/athletes');
+})
+
+app.get('/api/athletes/:athleteId/sports', async (req, res) => {
+    const athleteId = req.params.athleteId;
+    var l = []; // liste des sports
+
+    // on va devoir récupérer depuis la base de données nos sports
+    const sports = await Sport.find({});
+    sportLoop: for (var i in sports) {
+        for (var j in sports[i].athletes) {
+            if (sports[i].athletes[j]._id == athleteId) {
+                l.push(sports[i]);
+                continue sportLoop;
+            }
+        }
+    }
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(l));
 })
 
 // on écoute sur notre port.

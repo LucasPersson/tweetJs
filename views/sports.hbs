@@ -21,6 +21,39 @@
             <input name="name" type="text" class="form-control" id="name">
         </div>
         <button type="submit" class="btn btn-primary">Envoyer</button>
-        <a href="/sports" class="btn btn-cancel">Annuler</a>
+        <a href="/" class="btn btn-cancel">Annuler</a>
     </form>
 </div>
+
+<h2>Ajouter un athlète à un sport</h2>
+<div class="container-fluid">
+    <form method="post" onSubmit="return process();" id="specialForm" name="specialForm">
+        <div class="form-group">
+            <label for="athleteId">Athlète</label>
+            <select id="athleteId" name="athleteId">
+                {{#each athletes}}
+                <option value="{{_id}}">{{firstName}} {{lastName}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="sportId">Sport</label>
+            <select id="sportId" name="sportId">
+                {{#each sports}}
+                <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+        <a href="/" class="btn btn-cancel">Annuler</a>
+    </form>
+</div>
+
+<script>
+    function process() {
+        var url = "/api/sports/" + document.getElementById("sportId").value + "/athletes/" + document.getElementById("athleteId").value;
+        document.getElementById("specialForm").action = url;
+        document.forms["specialForm"].submit();
+        return false;
+    }
+</script>
