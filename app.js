@@ -25,30 +25,42 @@ app.use(express.urlencoded({ extended: false }));
 app.set('view engine', 'hbs');
 // on indique que nos vues se trouverons toujours dans le dossier views
 app.set('views', path.join(__dirname, 'views'));
-
 // on indique à notre app d'utiliser nos routers
 app.use('/', commentRouter);
 
-// notre première route !
-// on envoi un Hello World si la requête est sur la racine.
+// page d'index
 app.get('/', (req, res) => {
     res.render('index', { name: 'athleteJS' });
 });
 
 app.get('/athletes', async (req, res) => {
-
-    // on va devoir récupérer depuis la base de données nos tweets ...
+    // on va devoir récupérer depuis la base de données nos athletes
     const athletes = await Athlete.find({});
 
     res.render('athletes', { athletes });
 })
 
 app.get('/sports', async (req, res) => {
-
-    // on va devoir récupérer depuis la base de données nos tweets ...
+    // on va devoir récupérer depuis la base de données nos sports
     const sports = await Sport.find({});
 
     res.render('sports', { sports });
+})
+
+app.get('/api/sports', async (req, res) => {
+    // on va devoir récupérer depuis la base de données nos sports
+    const sports = await Sport.find({});
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(sports));
+})
+
+app.get('/api/athletes', async (req, res) => {
+    // on va devoir récupérer depuis la base de données nos sports
+    const athletes = await Athlete.find({});
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(athletes));
 })
 
 // on écoute sur notre port.
