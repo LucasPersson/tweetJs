@@ -8,6 +8,8 @@ const connect = require('./database/mongodb');
 
 const Athlete = require('./models/athlete');
 const Sport = require('./models/sport');
+const genderEnum = require("./models/gender");
+const countryEnum = require("./models/country");
 
 const commentRouter = require('./routers/comment.router');
 
@@ -37,7 +39,7 @@ app.get('/athletes', async (req, res) => {
     // on va devoir récupérer depuis la base de données nos athletes
     const athletes = await Athlete.find({});
 
-    res.render('athletes', { athletes });
+    res.render('athletes', { athletes, genderEnum, countryEnum });
 })
 
 app.get('/sports', async (req, res) => {
@@ -54,6 +56,17 @@ app.get('/api/sports', async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(sports));
 })
+app.post('/api/sports', async (req, res) => {
+    const paramSport = req.body;
+
+    const sport = new Sport({
+        name: paramSport.name,
+        athletes: []
+    });
+    await sport.save();
+
+    res.redirect('/sports');
+})
 
 app.get('/api/athletes', async (req, res) => {
     // on va devoir récupérer depuis la base de données nos sports
@@ -61,6 +74,19 @@ app.get('/api/athletes', async (req, res) => {
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(athletes));
+})
+app.post('/api/athletes', async (req, res) => {
+    const paramAthlete = req.body;
+
+    const athlete = new Athlete({
+        firstName: paramAthlete.firstName,
+        lastName: paramAthlete.lastName,
+        gender: paramAthlete.gender,
+        country: paramAthlete.country
+    });
+    await athlete.save();
+
+    res.redirect('/athletes');
 })
 
 // on écoute sur notre port.

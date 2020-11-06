@@ -1,7 +1,6 @@
 <h1>Sports Olympiques</h1>
 
 <h2>Liste des Sports</h2>
-
 <div class="container-fluid">
     {{#each sports}}
     <div class="row" style="margin: 5px 20px 5px 20px;">
@@ -12,4 +11,16 @@
         </div>
     </div>
     {{/each}}
+</div>
+
+<h2>Nouveau Sport</h2>
+<div class="container-fluid">
+    <form method="post" action="/api/sports">
+        <div class="form-group">
+            <label for="user">Nom</label>
+            <input name="name" type="text" class="form-control" id="name">
+        </div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+        <a href="/sports" class="btn btn-cancel">Annuler</a>
+    </form>
 </div>

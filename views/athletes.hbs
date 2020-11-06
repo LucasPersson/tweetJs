@@ -1,5 +1,4 @@
 <h2>Liste des Athlètes !</h2>
-
 <div class="container-fluid">
     {{#each athletes}}
     <div class="row" style="margin: 5px 20px 5px 20px;">
@@ -12,4 +11,36 @@
         </div>
     </div>
     {{/each}}
+</div>
+
+<h2>Nouveau Athlète !</h2>
+<div class="container-fluid">
+    <form method="post" action="/api/athletes">
+        <div class="form-group">
+            <label for="firstName">Prénom</label>
+            <input name="firstName" type="text" class="form-control" id="firstName">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Nom de Famille</label>
+            <input name="lastName" type="text" class="form-control" id="lastName">
+        </div>
+        <div class="form-group">
+            <label for="gender">Genre</label>
+            <select id="gender" name="gender">
+                {{#each genderEnum}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="country">Country</label>
+            <select id="country" name="country">
+                {{#each countryEnum}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+        <a href="/athletes" class="btn btn-cancel">Annuler</a>
+    </form>
 </div>
