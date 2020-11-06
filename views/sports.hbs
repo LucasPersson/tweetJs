@@ -6,7 +6,10 @@
     <div class="row" style="margin: 5px 20px 5px 20px;">
         <div class="card" style="width: 100%; max-width: 50rem;">
             <div class="card-body">
-                <h5 class="card-title">{{name}} ({{athletes.length}})</h5>
+                    <h5 class="card-title">{{name}} ({{athletes.length}})</h5>
+                    
+                        <button type="submit" class="btn btn-primary">Supprimer</button>
+                    
             </div>
         </div>
     </div>
@@ -51,9 +54,18 @@
 
 <script>
     function process() {
+        console.log("testest");
         var url = "/api/sports/" + document.getElementById("sportId").value + "/athletes/" + document.getElementById("athleteId").value;
         document.getElementById("specialForm").action = url;
         document.forms["specialForm"].submit();
+        return false;
+    }
+
+    function processDelete() {
+        console.log("del");
+        var url = "/api/sports/delete/"+ document.getElementById("athleteId").value;
+        document.getElementById("specialFormDelete").action = url;
+        document.forms["specialFormDelete"].submit();
         return false;
     }
 </script>
