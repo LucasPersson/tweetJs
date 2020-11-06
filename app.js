@@ -32,46 +32,24 @@ app.use('/', commentRouter);
 // notre première route !
 // on envoi un Hello World si la requête est sur la racine.
 app.get('/', (req, res) => {
-    res.render('index', { name: 'TweetJs' });
-});
-
-app.get('/tweets/new', (req, res) => {
-    res.render('new');
+    res.render('index', { name: 'athleteJS' });
 });
 
 app.get('/athletes', async (req, res) => {
 
     // on va devoir récupérer depuis la base de données nos tweets ...
     const athletes = await Athlete.find({});
-    console.log(athletes)
 
     res.render('athletes', { athletes });
 })
 
-app.get('/tweets/:id', async function (req, res) {
-    const id = req.params.id;
+app.get('/sports', async (req, res) => {
 
-    const tweet = await Tweet.findById(id);
-    // on ajoute la récupération des comments !
-    const comments = await getCommentsByTweetId(id);
-    const users = await getRandomUsers(3);
+    // on va devoir récupérer depuis la base de données nos tweets ...
+    const sports = await Sport.find({});
 
-    res.render('tweet', { tweet, users, comments });
-});
-
-app.post('/tweets', async (req, res) => {
-    const paramTweet = req.body;
-
-    const tweet = new Tweet({
-        title: paramTweet.title,
-        content: paramTweet.content,
-        user: paramTweet.user,
-        createdAt: new Date(),
-    });
-    await tweet.save();
-
-    res.redirect('/tweets');
-});
+    res.render('sports', { sports });
+})
 
 // on écoute sur notre port.
 app.listen(port, () => {
