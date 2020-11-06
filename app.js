@@ -37,19 +37,6 @@ app.get('/', (req, res) => {
     res.render('index', { name: 'athleteJS' });
 });
 
-app.get('/athletes', async (req, res) => {
-    // on va devoir récupérer depuis la base de données nos athletes
-    const athletes = await Athlete.find({});
-
-    res.render('athletes', { athletes, genderEnum, countryEnum });
-})
-
-app.get('/sports', async (req, res) => {
-    // on va devoir récupérer depuis la base de données nos sports
-    const sports = await Sport.find({});
-
-    res.render('sports', { sports });
-})
 
 app.get('/api/sports', async (req, res) => {
     // on va devoir récupérer depuis la base de données nos sports

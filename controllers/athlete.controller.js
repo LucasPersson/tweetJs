@@ -1,4 +1,6 @@
 const AthleteService = require('../services/athlete.service');
+const genderEnum = require("../models/gender");
+const countryEnum = require("../models/country");
 
 class AthleteController {
     constructor() {
@@ -10,7 +12,7 @@ class AthleteController {
         // on va devoir récupérer depuis la base de données nos sports
         const athletes = await this.athleteService.getAll();
 
-        res.render('athletes', { athletes });
+        res.render('athletes', { athletes, genderEnum, countryEnum  });
     };
     
 }
