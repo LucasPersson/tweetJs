@@ -12,10 +12,6 @@ const router = express.Router();
 
 router.get('/sports', async (req, res) => {
     // on va devoir récupérer depuis la base de données nos sports
-    /*const sports = await Sport.find({});
-
-    res.render('sports', { sports });*/
-
     sportController.getAll(req, res);
 })
 
@@ -34,6 +30,15 @@ router.post('/api/sports', async (req, res) => {
         athletes: []
     });
     await sport.save();
+
+    res.redirect('/sports');
+})
+
+router.post('/api/sports/delete/:sportId', async (req, res) => {
+    console.log("apiaaaa");
+    const sportId = req.params.sportId;
+    
+    await Sport.findByIdAndDelete(sportId);
 
     res.redirect('/sports');
 })

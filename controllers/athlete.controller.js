@@ -12,6 +12,8 @@ class AthleteController {
         // on va devoir récupérer depuis la base de données nos sports
         const athletes = await this.athleteService.getAll();
 
+        console.log(athletes);
+
         res.render('athletes', { athletes, genderEnum, countryEnum  });
     };
     

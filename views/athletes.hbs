@@ -8,7 +8,7 @@
                 <h6 class="card-subtitle mb-2 text-muted">{{gender}}</h6>
                 <p class="card-text">{{country}}</p>
 
-                <form method="DELETE" action="/api/athletes/{{_id}}">
+                <form method="POST" action="/api/athletes/delete/{{_id}}">
                     <button type="submit" class="btn btn-primary">Supprimer</button>
                 </form>
             </div>
@@ -19,7 +19,7 @@
 
 <h2>Nouveau Athlète !</h2>
 <div class="container-fluid">
-    <form method="post" action="/api/athletes">
+    <form method="post" action="/api/athletes/">
         <div class="form-group">
             <label for="firstName">Prénom</label>
             <input name="firstName" type="text" class="form-control" id="firstName">
@@ -32,7 +32,7 @@
             <label for="gender">Genre</label>
             <select id="gender" name="gender">
                 {{#each genderEnum}}
-                <option value="{{this}}">{{this}}</option>
+                    <option value="{{this}}">{{this}}</option>
                 {{/each}}
             </select>
         </div>
@@ -40,7 +40,7 @@
             <label for="country">Country</label>
             <select id="country" name="country">
                 {{#each countryEnum}}
-                <option value="{{this}}">{{this}}</option>
+                    <option value="{{this}}">{{this}}</option>
                 {{/each}}
             </select>
         </div>

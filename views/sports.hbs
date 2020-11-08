@@ -8,7 +8,9 @@
             <div class="card-body">
                     <h5 class="card-title">{{name}} ({{athletes.length}})</h5>
                     
+                    <form method="POST" action="/api/sports/delete/{{_id}}">
                         <button type="submit" class="btn btn-primary">Supprimer</button>
+                    </form>
                     
             </div>
         </div>

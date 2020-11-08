@@ -44,8 +44,10 @@ router.post('/api/athletes', async (req, res) => {
     res.redirect('/athletes');
 })
 
-router.delete('/api/athletes/:athleteId', async (req, res) => {
+router.post('/api/athletes/delete/:athleteId', async (req, res) => {
+    console.log("in delete");
     const athleteId = req.params.athleteId;
+    
     await Athlete.findByIdAndDelete(athleteId);
 
     res.redirect('/athletes');
@@ -53,6 +55,7 @@ router.delete('/api/athletes/:athleteId', async (req, res) => {
 
 // get sports from athlete
 router.get('/api/athletes/:athleteId/sports', async (req, res) => {
+    
     const athleteId = req.params.athleteId;
     var l = []; // liste des sports
 
