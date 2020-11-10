@@ -31,26 +31,11 @@ router.get('/api/athletes', async (req, res) => {
 
 // create athlete api
 router.post('/api/athletes', async (req, res) => {
-    const paramAthlete = req.body;
-
-    const athlete = new Athlete({
-        firstName: paramAthlete.firstName,
-        lastName: paramAthlete.lastName,
-        gender: paramAthlete.gender,
-        country: paramAthlete.country
-    });
-    await athlete.save();
-
-    res.redirect('/athletes');
+    athleteController.create(req, res);
 })
 
 router.post('/api/athletes/delete/:athleteId', async (req, res) => {
-    console.log("in delete");
-    const athleteId = req.params.athleteId;
-    
-    await Athlete.findByIdAndDelete(athleteId);
-
-    res.redirect('/athletes');
+    athleteController.delete(req, res);
 })
 
 // get sports from athlete

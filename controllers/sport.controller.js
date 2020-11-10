@@ -16,6 +16,27 @@ class SportController {
         res.render('sports', { sports, athletes });
     };
 
+    async create(req,res){
+        const sports = await this.sportService.create(req.body);
+
+        res.redirect('/sports');
+    }
+
+    async delete(req,res){
+        const sportId = req.params.sportId;
+    
+        await this.sportService.delete(sportId);
+
+        res.redirect('/sports');
+    }
+
+    async addAthleteToSport(req,res){
+
+        await this.sportService.addAthleteToSport(req)
+
+        res.redirect('/sports');
+    }
+
 }
 
 // on n'oublie pas d'exporter notre Controller

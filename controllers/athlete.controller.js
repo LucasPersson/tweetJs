@@ -12,10 +12,20 @@ class AthleteController {
         // on va devoir récupérer depuis la base de données nos sports
         const athletes = await this.athleteService.getAll();
 
-        console.log(athletes);
-
         res.render('athletes', { athletes, genderEnum, countryEnum  });
-    };
+    }
+
+    async create(req,res){
+        await this.athleteService.create(req);
+
+        res.redirect('/athletes');
+    }
+
+    async delete(req,res){
+        await this.athleteService.delete(req);
+
+        res.redirect('/athletes');
+    }
     
 }
 

@@ -23,24 +23,11 @@ router.get('/api/sports', async (req, res) => {
     res.end(JSON.stringify(sports));
 })
 router.post('/api/sports', async (req, res) => {
-    const paramSport = req.body;
-
-    const sport = new Sport({
-        name: paramSport.name,
-        athletes: []
-    });
-    await sport.save();
-
-    res.redirect('/sports');
+    sportController.create(req, res);
 })
 
 router.post('/api/sports/delete/:sportId', async (req, res) => {
-    console.log("apiaaaa");
-    const sportId = req.params.sportId;
-    
-    await Sport.findByIdAndDelete(sportId);
-
-    res.redirect('/sports');
+    sportController.delete(req, res);
 })
 
 router.get('/api/sports/:sportId/athletes', async (req, res) => {
@@ -58,24 +45,17 @@ router.get('/api/sports/:sportId/athletes', async (req, res) => {
 })
 
 router.post('/api/sports/:sportId/athletes/:athleteId', async (req, res) => {
-    const sportId = req.params.sportId;
-    const athleteId = req.params.athleteId;
-
-    const sport = await Sport.findById(sportId);
-    if (sport.athletes.indexOf(athleteId) < 0) sport.athletes.push(athleteId)
-    await sport.save();
-
-    res.redirect('/sports');
+    sportController.addAthleteToSport(req,res);
 })
 
-router.post('/api/sports/delete/:sportId', async (req, res) => {
+/*router.post('/api/sports/delete/:sportId', async (req, res) => {
     const sportId = req.params.sportId;
 
     const sport = await Sport.deletOne(sportId);
     //await sport.save();
 
     res.redirect('/sports');
-})
+})*/
 
 // ici pas de classe, on export directement l'objet route
 module.exports = router;
